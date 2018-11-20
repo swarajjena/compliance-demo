@@ -1,0 +1,25 @@
+page-retrive-data {
+    .align_content_center{
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-align-content: center;
+        align-content: center;
+        justify-content:center        
+    }
+    .select_menu{
+        border: 1px solid #000;
+        max-width:100%
+    }
+
+    .law_button{
+        border:1px solid #000;
+        width:95%
+    }
+
+    .filter_table td{
+        padding: 5px
+    }
+
+}

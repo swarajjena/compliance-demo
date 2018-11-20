@@ -1,0 +1,123 @@
+<!--
+  Generated template for the MasterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+          
+  <ion-navbar class="con_head">
+        <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+        </button>
+    
+    <ion-title>Compliance Master Database Structure</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="align_content_center">
+      <ion-col col-3>
+        <ion-card>        
+          <ion-card-content>
+            <ion-list>
+                <button ion-button class="master_db_btn"  clear color="header">
+                    Master Databases
+                </button>  
+
+                <button ion-button *ngFor="let db of master_dbs" class="master_db_btn" color="content" outline="{{db!=selected_master_db}}" (click)="selectDB(db)">
+                    {{db}}
+                </button>  
+            </ion-list>
+          </ion-card-content>
+        </ion-card>          
+      </ion-col>
+      <ion-col col-3  *ngIf="selected_master_db">
+          <ion-card>        
+              <ion-card-content>
+                  <ion-list *ngIf="selected_master_db">
+                      <button ion-button class="master_db_btn"  clear color="header" text-wrap>
+                          Attributes of {{selected_master_db}}
+                      </button>  
+        
+                      <button ion-button *ngFor="let attr of master_db_attributes"  color="content" class="master_db_btn"  outline="{{attr!=selected_attr}}" (click)="selectAttribute(attr)">
+                          {{attr.COLUMN_NAME}}
+                      </button>  
+
+                      <button ion-button icon-start clear  color="content" >
+                          <ion-icon name="add"></ion-icon>
+                          Add Attribute
+                      </button>
+                  </ion-list>
+                </ion-card-content>
+            </ion-card>          
+      </ion-col>
+      <ion-col col-4 *ngIf="selected_attr">
+            <ion-card>        
+              <ion-card-content>
+                  <ion-list *ngIf="selected_attr">
+                      <button ion-button class="master_db_btn"  clear color="header" text-wrap>
+                          Applicable validations for {{selected_attr.COLUMN_NAME}}
+                      </button>  
+
+                      
+                      <ion-item *ngFor="let rule of all_rules">
+                          <ion-label color="content" >{{rule.Validation_Name}}</ion-label>
+                          <ion-checkbox color="content" (ionChange)="rule.Validation_Function_Name=='checkAllowLimitedOptions'?selectLimitedOption(rule):ruleSelected(rule)" checked="{{attribute_rule_relation.rules.indexOf(rule.Validation_ID)>=0}}"></ion-checkbox>
+                      </ion-item>
+                                      
+        
+                  </ion-list>
+               </ion-card-content>
+            </ion-card>          
+
+            <ion-card *ngIf="show_attr_filter">        
+                    <ion-card-content>
+                        <ion-list >
+                            <ion-item >
+                                <ion-label color="content" >Use this attribute as data filter</ion-label>
+                                <ion-checkbox color="content" (ionChange)="filterChange()" checked="{{attribute_selected_as_filter}}"></ion-checkbox>
+                            </ion-item>                                                      
+                        </ion-list>
+                     </ion-card-content>
+            </ion-card>          
+                  
+            
+            <ion-card *ngIf="slected_limited_option">        
+                    <ion-card-content>
+                        <ion-list>
+                            <ion-label class="master_db_btn"  clear color="header" text-wrap style="text-transform:uppercase">
+                                Options for {{selected_attr.COLUMN_NAME}}
+                            </ion-label>  
+      
+                            <button ion-button outline color="content" *ngFor="let option of attribute_options">{{option.Option_Name}}</button>
+      
+                            <br/>
+                            <div style="display:flex;flex-direction:row">
+
+                                <ion-item  *ngIf="open_add_option" style="border:1px solid #444">
+                                        <ion-input type="new_option" [(ngModel)]="new_option"></ion-input>
+                                </ion-item>
+                                <button   *ngIf="open_add_option" outline item-right (click)="addAttributeOption()">ADD</button>
+        
+                                <button ion-button icon-start clear color="content"  *ngIf="!open_add_option" (click)="open_add_option=true">
+                                    <ion-icon name="add"></ion-icon>
+                                    Add Option
+                                </button>
+                            </div>
+                              
+              
+                        </ion-list>
+                    </ion-card-content>
+            </ion-card>          
+
+
+      </ion-col>
+
+  
+    </ion-row>
+  </ion-grid>
+</ion-content>

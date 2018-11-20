@@ -1,0 +1,29 @@
+page-master {
+    .master_db_btn{
+        width:100%
+    }
+
+    .toolbar-background{
+        background: #E0342F
+    
+    }
+
+    .toolbar-title{
+        color:#FFF
+    }
+
+    .align_content_center{
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-align-content: center;
+        align-content: center;
+        justify-content:center        
+    }
+
+    ion-label{
+        text-transform: uppercase;
+        font-size:1.2rem
+    }
+}

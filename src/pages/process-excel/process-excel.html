@@ -1,0 +1,50 @@
+<!--
+  Generated template for the ProcessExcelPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>process Excel</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+     <ion-grid>
+       <ion-row>
+         <ion-col col-8>
+            <h2>Table : {{current_processing_table}}</h2>
+         </ion-col>
+         <ion-col col-4 *ngIf="table_data">
+            <button ion-button color="{{validated_data?'content':'header'}}" (click)="validateData()">Validate Data</button>
+            <button ion-button color="{{validated_data && !inactive?'header':'content'}}" (click)="storeValidatedData()">Store Validated Data</button>
+         </ion-col>
+         <ion-col col-4 *ngIf="!table_data || table_data.length==0">
+         </ion-col>
+             
+       </ion-row>
+     </ion-grid>
+
+
+    <table class="data_table" border="1">
+      <tr>
+          <th  *ngFor="let attribute of local_master_link">
+              {{attribute.header}}
+          </th>
+      </tr>
+
+      <tr *ngFor="let row of table_data">
+          <td  *ngFor="let val of row.data" [class.error_cell]="!(validated_data==undefined || validated_data[row.id][val.id])">
+              {{val.value}}
+          </td>
+      </tr>
+
+    </table>
+
+
+</ion-content>

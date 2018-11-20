@@ -38,7 +38,9 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  header:     #A32320,
+  content:    #404041
 );
 
 
@@ -86,3 +88,8 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+
+$button-md-font-size:1.2rem;
+
+$item-md-font-size:1.2rem

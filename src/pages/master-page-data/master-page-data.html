@@ -1,0 +1,68 @@
+<!--
+  Generated template for the MasterPageDataPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+        <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+        </button>
+
+    <ion-title>Compliance Master Data</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-3 *ngFor="let db of master_dbs">
+            <button ion-button  class="master_db_btn"  outline="{{db!=selected_master_db}}" color="content" (click)="selectDB(db)" >
+                {{db}}
+            </button>  
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+          <ion-col col-7 >
+              <button ion-button icon-start outline color="content">
+                  <ion-icon name="add"></ion-icon>
+                  Add New Row
+              </button>          
+              <button ion-button icon-start outline  color="content">
+                  EXPORT
+              </button>          
+          </ion-col>
+          <ion-col col-5>
+              <ion-searchbar></ion-searchbar>
+          </ion-col>
+
+
+          <ion-col >
+          </ion-col>
+
+        </ion-row>
+        
+    </ion-grid>
+
+
+
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+              <th *ngFor="let attr of master_attributes">{{attr.COLUMN_NAME}}</th>
+          </tr>
+        </thead>
+        <tbody>
+              <tr *ngFor="let row of master_table_data">
+                <td *ngFor="let attr of master_attributes">{{row[attr.COLUMN_NAME]}}</td>
+              </tr>
+        </tbody>
+      </table>      
+
+</ion-content>
