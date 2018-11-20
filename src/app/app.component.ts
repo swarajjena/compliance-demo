@@ -16,7 +16,7 @@ export class MyApp {
 
   pages: Array<{title: string, page: any}>;
 
-  rootPage:any = ImportExcelPage;
+  rootPage:any = MasterPage;
 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
