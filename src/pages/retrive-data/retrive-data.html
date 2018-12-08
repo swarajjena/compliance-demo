@@ -26,7 +26,7 @@
                     </ion-col>
 
                     <ion-col col-3>
-                      <ion-select  [(ngModel)]="attr['selected']" interface="popover" class="select_menu" >
+                      <ion-select  [(ngModel)]="attr['selected']" interface="popover" class="select_menu" multiple="true">
                           <ion-option *ngFor="let option of attr.options" value="{{option.value}}">{{option.label}}</ion-option>
                       </ion-select>              
                     </ion-col>
