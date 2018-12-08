@@ -48,7 +48,7 @@ export class RetriveDataPage {
                                                                   display:attr.Attribute_name.replace(/_/g," "),
                                                                   selected:"ALL",
                                                                   ...attr,
-                                                                  options:[{value:"ALL", label:"ALL"}]}))
+                                                                  options:[]}))
 
         this.retriveFilterValues()
     })
@@ -80,17 +80,15 @@ export class RetriveDataPage {
         console.log(res)
         this.filter_results  = res;
         this.active_result =  this.filter_results[0];
-        this.active_result_array = []
+        this.active_result_array = [];
 
-        console.log(this.active_result)
+        console.log(this.active_result);
 
         for(let key in this.active_result){
             this.active_result_array.push({attr:key,value:this.active_result[key]})
         }
     })
-    .catch(err=>{console.log(err)})
-    
-
+    .catch(err=>{console.log(err)})  
   }
 
   makeResultActive(res){
