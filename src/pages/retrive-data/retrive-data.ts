@@ -46,7 +46,6 @@ export class RetriveDataPage {
 
         this.all_filters =  this.all_filters.map(attr =>new Object({
                                                                   display:attr.Attribute_name.replace(/_/g," "),
-                                                                  selected:"ALL",
                                                                   ...attr,
                                                                   options:[]}))
 
