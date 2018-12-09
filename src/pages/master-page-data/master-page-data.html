@@ -51,6 +51,7 @@
     </ion-grid>
 
 
+    <ion-scroll scrollX="true"  scrollY="true" style="height:100%;width:100%">
 
     <table class="table table-bordered">
         <thead>
@@ -63,6 +64,7 @@
                 <td *ngFor="let attr of master_attributes">{{row[attr.COLUMN_NAME]}}</td>
               </tr>
         </tbody>
-      </table>      
+      </table>  
+      </ion-scroll>    
 
 </ion-content>

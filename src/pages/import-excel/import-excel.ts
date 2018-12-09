@@ -62,7 +62,7 @@ export class ImportExcelPage {
   }
 
   getExcelHeaders(){
-    this.server.getLinkageData().toPromise()
+    this.server.getLinkageData(this.server_file_path).toPromise()
     .then(res => {
       this.local_master_link = res["data"]
     })

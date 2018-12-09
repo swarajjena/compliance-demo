@@ -17,6 +17,7 @@ import { removeSummaryDuplicates } from '@angular/compiler';
 })
 export class ProcessExcelPage {
 
+  all_tables = ["Jurisdiction_Master","Law_Master","Provision_Master","Compliance_Master"]
   current_processing_table="Jurisdiction_Master";
   local_master_link;
   server_file_path;
@@ -31,6 +32,8 @@ export class ProcessExcelPage {
 
   inactive=false;
 
+  upload_complete = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public server: ServerProvider) {
       this.server_file_path= this.navParams.get("filepath")
   }
@@ -41,7 +44,7 @@ export class ProcessExcelPage {
   }
 
   retrive_table_headers(table){
-    this.server.getLinkageData().toPromise()
+    this.server.getLinkageData(this.server_file_path).toPromise()
     .then(res => {
       console.log(table);
       this.local_master_link = res["data"].filter(data=>{
@@ -63,12 +66,14 @@ export class ProcessExcelPage {
         this.table_data=[];
         console.log(data_array)
 
+        let cnt = 0;
         for(let row in data_array){
-          let data_string = data_array[row].join('')
-          if(unique_check.indexOf(data_string)<0){
+          let data_string = data_array[row][0]
+          if(data_string!=null && data_string.trim()!=="" && unique_check.indexOf(data_string)<0){
             let data_row=data_array[row].map((el, ind)=> new Object({id:ind, value:el}))
-            this.table_data.push({id:row,data:data_row})
+            this.table_data.push({m_id:cnt,id:row,data:data_row})
             unique_check.push(data_string);
+            cnt++;
           }
         }
 
@@ -123,9 +128,9 @@ export class ProcessExcelPage {
     .then(res=>{
       let result=new Object(res);
       if(result["success"]){
-        if(this.current_processing_table!="Law_Master")
+        if(this.current_processing_table!="Law_Master" || true)
           this.goToNextTable()
-        else {
+/*        else {
 //          this.validated_data = undefined;  
           let remove_rows=[]
 
@@ -151,7 +156,7 @@ export class ProcessExcelPage {
           this.inactive=true;
 
         } 
-
+*/
       }
     })
     .catch(err=>{console.log(err)})
@@ -159,7 +164,16 @@ export class ProcessExcelPage {
   }
 
   goToNextTable(){
-    this.current_processing_table="Law_Master";
+    let cur_idx = this.all_tables.indexOf(this.current_processing_table);
+
+    if(cur_idx == this.all_tables.length-1){
+      this.upload_complete=true;
+      return 
+    }
+      
+    cur_idx++;
+    this.current_processing_table=this.all_tables[cur_idx];
+
     this.local_master_link = undefined;
   
     this.table_data = undefined;

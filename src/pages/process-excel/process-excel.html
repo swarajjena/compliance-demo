@@ -15,7 +15,9 @@
 
 <ion-content padding>
 
-     <ion-grid>
+
+
+     <ion-grid *ngIf="!upload_complete">
        <ion-row>
          <ion-col col-8>
             <h2>Table : {{current_processing_table}}</h2>
@@ -31,6 +33,7 @@
      </ion-grid>
 
 
+    <ion-scroll scrollX="true"  scrollY="true" style="height:100%;width:100%" *ngIf="!upload_complete">
     <table class="data_table" border="1">
       <tr>
           <th  *ngFor="let attribute of local_master_link">
@@ -39,12 +42,23 @@
       </tr>
 
       <tr *ngFor="let row of table_data">
-          <td  *ngFor="let val of row.data" [class.error_cell]="!(validated_data==undefined || validated_data[row.id][val.id])">
+          <td  *ngFor="let val of row.data" [class.error_cell]="!(validated_data==undefined || validated_data[row.m_id][val.id])">
               {{val.value}}
           </td>
       </tr>
 
     </table>
 
+    </ion-scroll>
+
+    <ion-grid *ngIf="upload_complete">
+        <ion-row>
+          <ion-col col-8 >
+             <h2>Upload Complete</h2>
+          </ion-col>
+              
+        </ion-row>
+      </ion-grid>
+ 
 
 </ion-content>

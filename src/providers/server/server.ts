@@ -63,14 +63,15 @@ export class ServerProvider {
     return this.http.get(this.SERVER_URI+"/data/table/"+db_name);
   }
 
-  getLinkageData(){
-    return this.http.get(this.SERVER_URI+"/import/attribute_linkage");
+  getLinkageData(file_name){
+    return this.http.get(this.SERVER_URI+"/import/attribute_linkage/"+file_name);
   }
 
   SaveLinkageData(linkage){
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type':  'application/json',
+        'enctype': 'boundary=----WebKitFormBoundaryuL67FWkv1CA'
       })
     };
     return this.http.post(this.SERVER_URI+"/import/store_attribute_linkage",{linkage:linkage});
