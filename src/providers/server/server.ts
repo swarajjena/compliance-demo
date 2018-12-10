@@ -156,14 +156,14 @@ export class ServerProvider {
     return this.http.get(this.SERVER_URI+"/retrive/filter_values/table/"+table+"/attr/"+attr);
   }
 
-  filterData(filters){      
+  filterData(filters,output_type){      
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
 
-    return this.http.post(this.SERVER_URI+"/retrive/filter_data",{filters:filters},httpOptions);
+    return this.http.post(this.SERVER_URI+"/retrive/filter_data",{filters:filters,output_type:output_type},httpOptions);
   }
 
   

@@ -7,11 +7,16 @@
 <ion-header>
           
     <ion-navbar class="con_head">
-          <button ion-button menuToggle>
-                  <ion-icon name="menu"></ion-icon>
-          </button>
+        <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+        </button>
       
       <ion-title>Retrive Data / Checklist</ion-title>
+
+      <button ion-button  clear style="position:absolute;top:0;right:30px;color:#FFF" (click)="toggleFilters()">
+           Filters <ion-icon name="flask"></ion-icon>
+      </button>
+
     </ion-navbar>
   
   </ion-header>
@@ -19,40 +24,144 @@
 
 <ion-content padding>
 
-      <ion-grid>
-        <ion-row class="align_content_center" *ngFor="let attr of all_filters">
-                    <ion-col col-3>
-                          <ion-label >{{attr.display}}</ion-label>
-                    </ion-col>
+      <ion-grid *ngIf="showFilters" style="border-bottom:1px solid #000">
+        <ion-row>
+                <ion-col col-1>
+                    <ion-label>Output : </ion-label>
+                </ion-col>
+                <ion-col col-2>
+                        <ion-item>
+                                <ion-label>Law</ion-label>
+                                <ion-checkbox [(ngModel)]="output.law"></ion-checkbox>
+                        </ion-item>
+    
+                </ion-col>
+                <ion-col col-2>
+                        <ion-item>
+                                <ion-label>Provision</ion-label>
+                                <ion-checkbox [(ngModel)]="output.provision"></ion-checkbox>
+                        </ion-item>    
+                </ion-col>
+                <ion-col col-2>
+                        <ion-item>
+                                <ion-label>Compliance</ion-label>
+                                <ion-checkbox [(ngModel)]="output.compliance"></ion-checkbox>
+                        </ion-item>
+    
+                </ion-col>
+                        
 
-                    <ion-col col-3>
-                      <ion-select  [(ngModel)]="attr['selected']" interface="popover" class="select_menu" multiple="true">
-                          <ion-option *ngFor="let option of attr.options" value="{{option.value}}">{{option.label}}</ion-option>
-                      </ion-select>              
-                    </ion-col>
+
+
+
                     
         </ion-row>
+        
+        <ion-row>
+            <ion-col col-3>
+
+                    <ion-row class="align_content_center" *ngFor="let lf of jurisdiction_filters">
+                            <ion-col col-12>
+                                  <ion-label >{{all_filters[lf].display}}</ion-label>
+                            </ion-col>
+        
+                            <ion-col col-12>
+                              <ion-select  [(ngModel)]="all_filters[lf]['selected']"  class="select_menu" multiple="true">
+                                  <ion-option *ngFor="let option of all_filters[lf].options" value="{{option.value}}">{{option.label}}</ion-option>
+                              </ion-select>              
+                            </ion-col>
+                            
+                    </ion-row>
+
+
+            </ion-col>
+            <ion-col col-3>
+
+                    <ion-row class="align_content_center" *ngFor="let lf of law_filters">
+                            <ion-col col-12>
+                                  <ion-label >{{all_filters[lf].display}}</ion-label>
+                            </ion-col>
+        
+                            <ion-col col-12>
+                              <ion-select  [(ngModel)]="all_filters[lf]['selected']"  class="select_menu" multiple="true">
+                                  <ion-option *ngFor="let option of all_filters[lf].options" value="{{option.value}}">{{option.label}}</ion-option>
+                              </ion-select>              
+                            </ion-col>
+                            
+                    </ion-row>
+        
+        
+
+
+            </ion-col>
+            <ion-col col-3>
+
+
+                    <ion-row class="align_content_center" *ngFor="let lf of provision_filters">
+                            <ion-col col-12>
+                                  <ion-label >{{all_filters[lf].display}}</ion-label>
+                            </ion-col>
+        
+                            <ion-col col-12>
+                              <ion-select  [(ngModel)]="all_filters[lf]['selected']"  class="select_menu" multiple="true">
+                                  <ion-option *ngFor="let option of all_filters[lf].options" value="{{option.value}}">{{option.label}}</ion-option>
+                              </ion-select>              
+                            </ion-col>
+                            
+                    </ion-row>
+        
+
+
+            </ion-col>
+            <ion-col col-3>
+
+
+                    <ion-row class="align_content_center" *ngFor="let lf of compliance_filters">
+                            <ion-col col-12>
+                                  <ion-label >{{all_filters[lf].display}}</ion-label>
+                            </ion-col>
+        
+                            <ion-col col-12>
+                              <ion-select  [(ngModel)]="all_filters[lf]['selected']"  class="select_menu" multiple="true">
+                                  <ion-option *ngFor="let option of all_filters[lf].options" value="{{option.value}}">{{option.label}}</ion-option>
+                              </ion-select>              
+                            </ion-col>
+                            
+                    </ion-row>
+
+
+            </ion-col>
+
+        </ion-row>
+
         <ion-row class="align_content_center">
-            <ion-col col-6>
-              <button color="content" ion-button (click)="filterData()">Retrive Data</button>
+            <ion-col col-4>
+              <button color="content" ion-button (click)="retriveAll()">Retrive Data</button>
+              <button color="content" ion-button (click)="retriveFlatTable()">Retrive As Flat Table</button>
+              <button color="content" ion-button (click)="retriveAll()">Export</button>                                          
             </ion-col>
         </ion-row>
       </ion-grid>
 
+      <ion-scroll scrollX="true"  scrollY="true" style="height:100%;width:100%;max-width:1300px;" *ngIf="active_result && !flat_table">
 
-      <ion-grid *ngIf="active_result">
-          <ion-row class="align_content_center">
-                      <ion-col col-3>
-                          <h3>Results</h3>
-                          <button  *ngFor="let row of filter_results" full color="content" ion-button clear="{{!(active_result===row)}}" class="law_button" (click)="makeResultActive(row)">{{row.Law_Name}}</button>
+      <ion-grid>
+          <ion-row>
+                      <ion-col>
+                        <ion-scroll scrollX="false"  scrollY="true" style="height:100%;width:100%" >
+                                        <h3>Results</h3>
+                                        <button  *ngFor="let row of filter_results" full color="content" text-wrap ion-button clear="{{!(active_result===row)}}" class="law_button" (click)="makeResultActive(row)">{{row.Type==="Law"?("Law : "+row.Law_Name):(row.Type==="Provision")?("Provision : "+row.Provision_Name):("Compliance : "+row.Task_Name)}}</button>
+              
+                        </ion-scroll>
+
                       </ion-col>
   
-                      <ion-col col-6>
+                      <ion-col  col-7>
                           <h3>Details</h3>
                           <table class="filter_table" border=1>
                               <tr *ngFor="let attr of active_result_array">
-                                  <td>{{attr.attr}}</td>
-                                  <td>{{attr.value}}</td>
+                                  <td style="max-width:200px;word-wrap:break-word">{{attr.attr}}</td>
+                                  <td style="max-width:400px;word-wrap:break-word">{{attr.value}}</td>
                               </tr>
                           </table>
 
@@ -60,10 +169,28 @@
                       
           </ion-row>
       </ion-grid>
-  
-  
 
- 
+      </ion-scroll>
+
+      <ion-scroll scrollX="true"  scrollY="true" style="height:100%;width:100%" *ngIf="active_result && flat_table">
+
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                      <th *ngFor="let attr of active_result_array">{{attr.attr}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let result of filter_results_array ">
+                            <td *ngFor="let attr of result">{{attr.value}}</td>
+                    </tr>
+          
+
+                        
+                </tbody>
+            </table>  
+      </ion-scroll>    
+                  
  
   
 </ion-content>
